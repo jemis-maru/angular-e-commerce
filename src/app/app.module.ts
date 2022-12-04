@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
+import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire/compat';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
@@ -17,6 +19,8 @@ import { ProductTabComponent } from './product-tab/product-tab.component';
 import { OrdersTabComponent } from './orders-tab/orders-tab.component';
 import { UsersTabComponent } from './users-tab/users-tab.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -34,11 +38,16 @@ import { AddProductComponent } from './add-product/add-product.component';
     ProductTabComponent,
     OrdersTabComponent,
     UsersTabComponent,
-    AddProductComponent
+    AddProductComponent,
+    SearchFilterPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

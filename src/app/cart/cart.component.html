@@ -1,18 +1,29 @@
 <div class="container">
-    <div class="bg-white rounded p-3 row">
-        <div class="col-12 col-sm-3">
-            <img class="card-img-top item-img" src="../../assets/images/no-image.png" alt="Card image cap">
+    <div *ngIf="!isQuantityValid" class="alert alert-danger mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">Please enter valid quantity.</p>
+        <button type="button" (click)="isQuantityValid = true" class="btn-close" data-bs-dismiss="danger" aria-label="Close"></button>
+    </div>
+    <div *ngFor="let data of cartData" class="bg-white rounded p-3 row mt-3">
+        <div *ngIf="data['imgUrl']; else notImgFound" class="col-12 col-sm-3">
+            <img class="card-img-top item-img" [src]="data['imgUrl']" alt="Card image cap">
         </div>
-        <div class="col-12 col-sm-9">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                the card's content.</p>
-            <div class="d-flex mb-10 w-100">
-                <button class="btn btn-primary" type="button">-</button>
-                <input class="form-control w-25" type="text" placeholder="Quantity">
-                <button class="btn btn-primary" type="button">+</button>
+        <ng-template #notImgFound>
+            <div class="col-12 col-sm-3">
+                <img class="card-img-top item-img" src="../../assets/images/no-image.png" alt="Card image cap">
             </div>
-            <div class="d-flex">
+        </ng-template>
+        <div class="col-12 col-sm-9">
+            <h5 class="card-title">{{ data['name'] }}</h5>
+            <p class="card-title">Category: {{ data['description'] }}</p>
+            <p class="card-title">Price: ₹{{ data['price'] }}</p>
+            <p class="card-title">Stock: {{ data['stock'] }}</p>
+            <div class="d-flex mb-10 w-100">
+                <button class="btn btn-primary" (click)="decreaseQuantity(data['id'])" type="button">-</button>
+                <input class="form-control w-25" [value]="data['quantity']" (input)="changeQuantity($event, data['id'])" type="text" placeholder="Quantity">
+                <button class="btn btn-primary" (click)="increaseQuantity(data['id'])" type="button">+</button>
+            </div>
+            <div class="d-flex gap-4">
+                <a class="btn btn-success" (click)="editQuantity(data['id'])">Edit quantity</a>
                 <a class="btn btn-danger">Delete</a>
             </div>
         </div>
@@ -20,7 +31,7 @@
     <div class="bg-white rounded p-3 row mt-30">
         <div class="d-flex justify-content-between">
             <h4>Total amount: </h4>
-            <h4>500</h4>
+            <h4>₹{{ totalAmount }}</h4>
         </div>
         <button routerLink="/order-summary" class="btn btn-primary" type="button">Place order</button>
     </div>

@@ -1,19 +1,31 @@
 <div>
+    <div *ngIf="!isQuantityValid" class="alert alert-danger mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">Please enter valid quantity.</p>
+        <button type="button" (click)="isQuantityValid = true" class="btn-close" data-bs-dismiss="danger" aria-label="Close"></button>
+    </div>
     <div class="card">
-        <div class="d-flex justify-content-center">
-            <img class="card-img-top item-img" src="../../assets/images/no-image.png" alt="Card image cap">
+        <div *ngIf="product['imgUrl']; else notImgFound" class="d-flex img-container justify-content-center">
+            <img class="card-img-top item-img" [src]="product['imgUrl']" alt="Card image cap">
         </div>
+        <ng-template #notImgFound>
+            <div class="d-flex img-container justify-content-center">
+                <img class="card-img-top item-img" src="../../assets/images/no-image.png" alt="Card image cap">
+            </div>
+        </ng-template>
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                the card's content.</p>
+            <div class="card-body">
+                <h5 class="card-title">{{ product['name'] }}</h5>
+                <p class="card-title">Category: {{ product['description'] }}</p>
+                <p class="card-title">Price: ₹{{ product['price'] }}</p>
+                <p class="card-title">Stock: {{ product['stock'] }}</p>
+            </div>
             <div class="d-flex justify-content-center mb-10 w-100">
-                <button class="btn btn-primary" type="submit">-</button>
-                <input class="form-control w-25" type="text" placeholder="Quantity">
-                <button class="btn btn-primary" type="submit">+</button>
+                <button class="btn btn-primary" (click)="decreaseQuantity()" type="button">-</button>
+                <input class="form-control w-25" [(ngModel)]="quantity" type="number" placeholder="Quantity">
+                <button class="btn btn-primary" (click)="increaseQuantity()" type="button">+</button>
             </div>
             <div class="d-flex justify-content-center">
-                <a routerLink="/cart" class="btn btn-primary">Add to cart</a>
+                <a (click)="addToCart()" class="btn btn-primary">Add to cart</a>
             </div>
         </div>
     </div>
