@@ -1,23 +1,51 @@
-<form>
-    <div class="form-group mb-10">
-        <label>Name: </label>
-        <input type="text" class="form-control" placeholder="Enter Name">
+<div>
+    <div *ngIf="isFormSubmitted" class="alert alert-success mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">Registerd successfully!</p>
+        <button type="button" (click)="isFormSubmitted = false" class="btn-close" data-bs-dismiss="success" aria-label="Close"></button>
     </div>
-    <div class="form-group mb-10">
-        <label>Email address: </label>
-        <input type="email" class="form-control" placeholder="Enter Email">
-    </div>
-    <div class="form-group mb-10">
-        <label>Password: </label>
-        <input type="password" class="form-control" placeholder="Password">
-    </div>
-    <div class="form-group mb-10">
-        <label>Confirm Password: </label>
-        <input type="password" class="form-control" placeholder="Confirm Password">
-    </div>
-    <div class="form-group mb-10">
-        <label>Date of birth: </label>
-        <input type="date" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-10">
+            <label>Name: </label>
+            <input class="form-control" type="text" name="name" formControlName="name">
+            <div *ngIf="registrationForm.controls.name?.touched">
+                <p class="error" *ngIf="registrationForm.controls.name?.errors?.['required'] === true">Name is a required field!</p>
+            </div>
+        </div>
+        <div class="form-group mb-10">
+            <label>Email address: </label>
+            <input class="form-control" type="email" name="email" formControlName="email">
+            <div *ngIf="registrationForm.controls.email?.touched">
+                <p class="error" *ngIf="registrationForm.controls.email?.errors?.['required'] === true">Email is a required field!</p>
+                <p class="error" *ngIf="registrationForm.controls.email?.errors?.['isEmailValidate'] === false">This is not a valid Email!!!</p>
+            </div>
+        </div>
+        <div class="form-group mb-10">
+            <label>Password: </label>
+            <input class="form-control" type="password" name="password" formControlName="password">
+            <div *ngIf="registrationForm.controls.password?.touched">
+                <p class="error" *ngIf="registrationForm.controls.password?.errors?.['required'] === true">Password is a required field!!</p>
+                <p class="error" *ngIf="registrationForm.controls.password?.errors?.['isPasswordValid'] === false">Password should contain one special character!</p>
+                <p class="error" *ngIf="registrationForm.controls.password.hasError('minlength')">Minimun 6 length is required in password!!</p>
+            </div>
+        </div>
+        <div class="form-group mb-10">
+            <label>Confirm Password: </label>
+            <input class="form-control" type="password" name="password" formControlName="confirmPassword">
+            <div *ngIf="registrationForm.controls.confirmPassword?.touched">
+                <p class="error" *ngIf="registrationForm.controls.confirmPassword?.errors?.['required'] === true">Confirm Password is a required field!!</p>
+                <p class="error" *ngIf="registrationForm.errors?.['isPassAndConfirmPassMatch'] === false">Password and confirm password is not matching!!</p>
+                <p class="error" *ngIf="registrationForm.controls.confirmPassword?.errors?.['isPasswordValid'] === false">Confirm Password should contain one special character!</p>
+                <p class="error" *ngIf="registrationForm.controls.confirmPassword.hasError('minlength')">Minimun 6 length is required in confirm password!!</p>
+            </div>
+        </div>
+        <div class="form-group mb-10">
+            <label>Date of birth: </label>
+            <input type="date" class="form-control" name="dob" formControlName="dob">
+            <div *ngIf="registrationForm.controls.dob?.touched">
+                <p class="error" *ngIf="registrationForm.controls.dob?.errors?.['required'] === true">Date of birth is a required field!</p>
+                <p class="error" *ngIf="registrationForm.controls.dob?.errors?.['isDateValidate'] === false">Date should not be greater than current date!</p>
+            </div>
+        </div>
+        <button [disabled]="!registrationForm.valid" type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>

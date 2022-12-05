@@ -1,11 +1,27 @@
-<form>
-    <div class="form-group mb-10">
-        <label>Email address: </label>
-        <input type="email" class="form-control" placeholder="Enter Email">
+<div>
+    <div *ngIf="isLoginFailed" class="alert alert-danger mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">Email id or password or both incorrect!</p>
+        <button type="button" (click)="isLoginFailed = false" class="btn-close" data-bs-dismiss="danger"
+            aria-label="Close"></button>
     </div>
-    <div class="form-group mb-10">
-        <label>Password: </label>
-        <input type="password" class="form-control" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-10">
+            <label>Email address: </label>
+            <input class="form-control" type="email" name="email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" ngModel required>
+            <div *ngIf="email.touched">
+                <p class="error" *ngIf="email.errors?.['required']">Email is a required field!</p>
+                <p class="error" *ngIf="email.errors?.['pattern']">This is not a valid Email!!!</p>
+            </div>
+        </div>
+        <div class="form-group mb-10">
+            <label>Password: </label>
+            <input (input)="passwordValidator()" class="form-control" type="password" #password="ngModel" name="password" minlength="6" ngModel required>
+            <div *ngIf="password.touched">
+                <p class="error" *ngIf="password.errors?.['required']">Password is a required field!</p>
+                <p class="error" *ngIf="password.hasError('minlength')">Minimun 6 length is required in password!!</p>
+                <p class="error" *ngIf="!hasPassSpecialChar">Password should contain one special character!</p>
+            </div>
+        </div>
+        <button [disabled]="!hasPassSpecialChar || !loginForm.valid" type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>

@@ -52,7 +52,7 @@ export class ProductDetailComponent implements OnInit {
     else{
       this.http.post<any>(environment.databaseUrl+`/cart.json`, {
         ...this.product,
-        email: "jemismaru123@gmail.com",
+        email: "jemismaru@gmail.com",
         quantity: this.quantity
       }).subscribe((res: any) => {
         console.log(res);

@@ -11,16 +11,22 @@
                 <a routerLink="/home" class="nav-link txt-white">Home</a>
             </li>
             <li class="nav-item">
-                <a routerLink="/register" class="nav-link txt-white">Register</a>
+                <a routerLink="/register" *ngIf="!isLogin" class="nav-link txt-white">Register</a>
             </li>
             <li class="nav-item">
-                <a routerLink="/login" class="nav-link txt-white">Login</a>
+                <a routerLink="/login" *ngIf="!isLogin" class="nav-link txt-white">Login</a>
             </li>
             <li class="nav-item">
-                <a routerLink="/profile" class="nav-link txt-white">Profile</a>
+                <a routerLink="/profile" *ngIf="isLogin" class="nav-link txt-white">Profile</a>
             </li>
             <li class="nav-item">
-                <a routerLink="/dashboard/products" class="nav-link txt-white">Dashboard</a>
+                <a routerLink="/cart" *ngIf="isLogin" class="nav-link txt-white">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/dashboard/products" *ngIf="isAdmin" class="nav-link txt-white">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a (click)="logout()" *ngIf="isLogin" class="nav-link txt-white">Logout</a>
             </li>
         </ul>
     </div>

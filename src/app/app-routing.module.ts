@@ -11,22 +11,26 @@ import { OrdersTabComponent } from './orders-tab/orders-tab.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductTabComponent } from './product-tab/product-tab.component';
 import { RegisterComponent } from './register/register.component';
+import { AdminAuthCanActiveGuard } from './shared/guards/admin-auth-can-active.guard';
+import { AuthCanActiveGuard } from './shared/guards/auth-can-active.guard';
+import { NoAuthCanActiveGuard } from './shared/guards/no-auth-can-active.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UsersTabComponent } from './users-tab/users-tab.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthCanActiveGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthCanActiveGuard] },
   { path: 'product-detail', component: ProductDetailComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'order-summary', component: OrderSummaryComponent },
-  { path: 'my-orders', component: MyOrdersComponent },
-  { path: 'profile', component: UserProfileComponent },
-  { path: 'add-product', component: AddProductComponent },
+  { path: 'cart', component: CartComponent, canActivate: [AuthCanActiveGuard] },
+  { path: 'order-summary', component: OrderSummaryComponent, canActivate: [AuthCanActiveGuard] },
+  { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthCanActiveGuard] },
+  { path: 'profile', component: UserProfileComponent, canActivate: [AuthCanActiveGuard] },
+  { path: 'add-product', component: AddProductComponent, canActivate: [AdminAuthCanActiveGuard] },
   {
     path: 'dashboard',
+    canActivate: [AdminAuthCanActiveGuard],
     component: DashboardComponent,
     children: [
       { path: 'products', component: ProductTabComponent },
