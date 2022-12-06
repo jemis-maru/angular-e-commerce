@@ -1,6 +1,6 @@
 <div>
     <div class="d-flex justify-content-end">
-        <button routerLink="/add-product" class="btn btn-success" type="button">+ Add product</button>
+        <button (click)="addProduct()" class="btn btn-success" type="button">+ Add product</button>
     </div>
     <div class="mt-3">
         <div class="table-responsive">
@@ -16,48 +16,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Mark</td>
+                    <tr *ngFor="let product of products">
+                        <td>{{ product.name }}</td>
                         <td>
-                            <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
+                            <img *ngIf="product.imgUrl; else notImgFound" class="item-img-table" [src]="product.imgUrl" alt="">
+                            <ng-template #notImgFound>
+                                <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
+                            </ng-template>
                         </td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                        <td>{{ product.description }}</td>
+                        <td>₹{{ product.price }}</td>
+                        <td>{{ product.stock }}</td>
                         <td>
                             <div class="d-flex gap-4">
-                                <button type="button" class="btn btn-success">Edit</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Jacob</td>
-                        <td>
-                            <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
-                        </td>
-                        <td>@fat</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <div class="d-flex gap-4">
-                                <button type="button" class="btn btn-success">Edit</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Larry</td>
-                        <td>
-                            <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
-                        </td>
-                        <td>@twitter</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>
-                            <div class="d-flex gap-4">
-                                <button type="button" class="btn btn-success">Edit</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
+                                <button (click)="editProduct(product)" type="button" class="btn btn-success">Edit</button>
+                                <button (click)="deleteProduct(product.id)" type="button" class="btn btn-danger">Delete</button>
                             </div>
                         </td>
                     </tr>

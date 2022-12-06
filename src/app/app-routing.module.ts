@@ -20,7 +20,7 @@ import { UsersTabComponent } from './users-tab/users-tab.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegisterComponent, canActivate: [NoAuthCanActiveGuard] },
+  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent, canActivate: [NoAuthCanActiveGuard] },
   { path: 'product-detail', component: ProductDetailComponent },
   { path: 'cart', component: CartComponent, canActivate: [AuthCanActiveGuard] },

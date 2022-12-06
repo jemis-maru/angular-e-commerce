@@ -1,6 +1,6 @@
 <form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
     <div *ngIf="isFormSubmitted" class="alert alert-success mt-3 d-flex justify-content-between" role="alert">
-        <p class="m-0">Product added successfully.</p>
+        <p class="m-0">{{ submittedMessage }}</p>
         <button type="button" (click)="isFormSubmitted = false" class="btn-close" data-bs-dismiss="success" aria-label="Close"></button>
     </div>
     <div class="form-group mb-10">
@@ -35,5 +35,5 @@
             <p class="error" *ngIf="addProductForm.controls.stock?.errors?.['required'] === true">Stock is a required field!</p>
         </div>
     </div>
-    <button [disabled]="!addProductForm.valid" type="submit" class="btn btn-primary">Add Product</button>
+    <button [disabled]="!addProductForm.valid" type="submit" class="btn btn-primary">{{ btnName }}</button>
 </form>

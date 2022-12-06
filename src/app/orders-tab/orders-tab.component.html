@@ -6,53 +6,29 @@
                 <th scope="col">Product's Name</th>
                 <th scope="col">Product's Image</th>
                 <th scope="col">Product's Description</th>
+                <th scope="col">Order's Quantity</th>
                 <th scope="col">Order amount</th>
+                <th scope="col">Order Status</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Mark</td>
-                <td>Mark</td>
+            <tr *ngFor="let order of orders">
+                <td>{{ order.email }}</td>
+                <td>{{ order.name }}</td>
                 <td>
-                    <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
+                    <img *ngIf="order.imgUrl; else notImgFound" class="item-img-table" [src]="order.imgUrl" alt="">
+                    <ng-template #notImgFound>
+                        <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
+                    </ng-template>
                 </td>
-                <td>@mdo</td>
-                <td>@mdo</td>
+                <td>{{ order.description }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.price * order.quantity }}</td>
+                <td>{{ order.status }}</td>
                 <td>
                     <div class="d-flex gap-4">
-                        <button type="button" class="btn btn-success">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Jacob</td>
-                <td>
-                    <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
-                </td>
-                <td>@fat</td>
-                <td>@mdo</td>
-                <td>
-                    <div class="d-flex gap-4">
-                        <button type="button" class="btn btn-success">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Mark</td>
-                <td>Larry</td>
-                <td>
-                    <img class="item-img-table" src="../../assets/images/no-image.png" alt="">
-                </td>
-                <td>@twitter</td>
-                <td>@mdo</td>
-                <td>
-                    <div class="d-flex gap-4">
-                        <button type="button" class="btn btn-success">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <button (click)="cancelOrder(order)" type="button" class="btn btn-danger">Cancel</button>
                     </div>
                 </td>
             </tr>
