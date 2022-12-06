@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../shared/service/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +11,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
+    let user: any = this.authService.getUserData();
+    this.userEmail = user.email;
     this.fetchCartData();
   }
 
@@ -20,6 +23,7 @@ export class CartComponent implements OnInit {
   cartData: any = [];
   isQuantityValid: boolean = true;
   totalAmount: number = 0;
+  userEmail: string = "";
 
   fetchCartData(): void {
     this.totalAmount = 0;
@@ -27,7 +31,7 @@ export class CartComponent implements OnInit {
       .pipe(map((data: any) => {
         let productsArr = [];
         for (let id in data) {
-          if (data[id].email === "jemismaru@gmail.com") {
+          if (data[id].email === this.userEmail) {
             productsArr.push({
               id,
               productId: data[id].id,

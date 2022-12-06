@@ -61,7 +61,9 @@ export class LoginComponent {
           this.authService.setUserData(response);
           this.authService.userSubject.next(response);
           localStorage.setItem("user", JSON.stringify(response));
-          this.router.navigate(['/home'])
+          if(!this.isLoginFailed){
+            this.router.navigate(['/home'])
+          }
         })
     })
   }

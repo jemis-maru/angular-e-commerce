@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/service/auth.service';
 
 @Component({
   selector: 'app-order-summary',
@@ -10,12 +11,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./order-summary.component.scss']
 })
 export class OrderSummaryComponent {
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
+    let user: any = this.authService.getUserData();
+    this.userEmail = user.email;
     this.fetchCartData();
   }
 
   orderData: any = [];
   totalAmount: number = 0;
+  userEmail: string = "";
 
   fetchCartData(): void {
     this.totalAmount = 0;
@@ -23,7 +27,7 @@ export class OrderSummaryComponent {
       .pipe(map((data: any) => {
         let orderArr = [];
         for (let id in data) {
-          if (data[id].email === "jemismaru@gmail.com") {
+          if (data[id].email === this.userEmail) {
             orderArr.push({
               id,
               productId: data[id].productId,

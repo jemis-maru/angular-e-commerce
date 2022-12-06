@@ -23,9 +23,12 @@
                 <a routerLink="/cart" *ngIf="isLogin" class="nav-link txt-white">Cart</a>
             </li>
             <li class="nav-item">
-                <a routerLink="/dashboard/products" *ngIf="isAdmin" class="nav-link txt-white">Dashboard</a>
+                <a routerLink="/my-orders" *ngIf="isLogin" class="nav-link txt-white">My Orders</a>
             </li>
             <li class="nav-item">
+                <a routerLink="/dashboard/products" *ngIf="isAdmin" class="nav-link txt-white">Dashboard</a>
+            </li>
+            <li class="nav-item cursor-pointer">
                 <a (click)="logout()" *ngIf="isLogin" class="nav-link txt-white">Logout</a>
             </li>
         </ul>
