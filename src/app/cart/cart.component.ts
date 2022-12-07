@@ -107,7 +107,6 @@ export class CartComponent implements OnInit {
         this.isQuantityValid = true;
         this.http.patch<any>(environment.databaseUrl + `/cart/${id}.json`, this.cartData[index])
         .subscribe((response: any) => {
-          console.log(response);
         })
       }
     }
@@ -116,13 +115,11 @@ export class CartComponent implements OnInit {
   removeFromCart(id: string): void {
     this.http.delete<any>(environment.databaseUrl + `/cart/${id}.json`)
       .subscribe((response: any) => {
-        console.log(response);
         this.fetchCartData();
       })
   }
 
   placeOrder(): void {
-    console.log(this.cartData);
     this.cartData.forEach((data: any) => {
       this.http.patch<any>(environment.databaseUrl + `/products/${data.productId}.json`, {
         stock: data.stock - data.quantity
@@ -133,10 +130,8 @@ export class CartComponent implements OnInit {
             stock: data.stock - data.quantity,
             status: "order placed"
           }).subscribe((res: any) => {
-            console.log(res);
             this.http.delete<any>(environment.databaseUrl+`/cart/${data.id}.json`)
               .subscribe((res: any) => {
-                console.log(res);
                 this.router.navigate(['/order-summary']);
               })
           })

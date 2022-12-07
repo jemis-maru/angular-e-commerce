@@ -62,7 +62,6 @@ export class AddProductComponent {
       this.http
         .post(`${environment.databaseUrl}/products.json`, params)
         .subscribe((responseData: any) => {
-          console.log(responseData);
           this.submittedMessage = "Product added successfully";
           this.isFormSubmitted = true;
         });

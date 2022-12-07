@@ -22,7 +22,6 @@ export class UserProfileComponent {
       requestType: "PASSWORD_RESET",
       email: this.user.email
     }).subscribe((response: any) => {
-      console.log(response);
       this.authService.setUserData({});
       this.authService.userSubject.next({});
       localStorage.removeItem("user");

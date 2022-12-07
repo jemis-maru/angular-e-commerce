@@ -21,6 +21,7 @@ import { UsersTabComponent } from './users-tab/users-tab.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
     OrdersTabComponent,
     UsersTabComponent,
     AddProductComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

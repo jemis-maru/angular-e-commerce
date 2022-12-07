@@ -1,4 +1,9 @@
 <div>
+    <div *ngIf="isAccountDisable" class="alert alert-danger mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">Your account is deactivated by admin!</p>
+        <button type="button" (click)="isAccountDisable = false" class="btn-close" data-bs-dismiss="danger"
+            aria-label="Close"></button>
+    </div>
     <div *ngIf="isLoginFailed" class="alert alert-danger mt-3 d-flex justify-content-between" role="alert">
         <p class="m-0">Email id or password or both incorrect!</p>
         <button type="button" (click)="isLoginFailed = false" class="btn-close" data-bs-dismiss="danger"

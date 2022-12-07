@@ -53,7 +53,6 @@ export class ProductTabComponent {
     this.http
       .delete(`${environment.databaseUrl}/products/${id}.json`)
       .subscribe((responseData: any) => {
-        console.log(responseData);
         this.fetchProducts();
       });
   }

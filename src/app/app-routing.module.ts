@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddProductComponent } from './add-product/add-product.component';
 import { CartComponent } from './cart/cart.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthCanActiveGuard] },
   { path: 'profile', component: UserProfileComponent, canActivate: [AuthCanActiveGuard] },
   { path: 'add-product', component: AddProductComponent, canActivate: [AdminAuthCanActiveGuard] },
+  { path: 'edit-user', component: EditUserComponent, canActivate: [AdminAuthCanActiveGuard] },
   {
     path: 'dashboard',
     canActivate: [AdminAuthCanActiveGuard],

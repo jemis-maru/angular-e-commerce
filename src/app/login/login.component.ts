@@ -18,6 +18,7 @@ export class LoginComponent {
 
   isLoginFailed: boolean = false;
   hasPassSpecialChar: boolean = true;
+  isAccountDisable: boolean = false;
 
   passwordValidator(): void {
     if((/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(this.form.value.password))){
@@ -37,34 +38,43 @@ export class LoginComponent {
     .pipe(
       catchError(() => {
         this.isLoginFailed = true;
-        return of([]);
+        return of(false);
       })
     )
     .subscribe((response: any) => {
-      this.http.get(environment.databaseUrl + "/users.json")
-        .pipe(map((data: any) => {
-          let user = {};
-          for (let id in data) {
-            if(data[id].email === response.email){
-              user = {
-                name: data[id].name,
-                email: data[id].email,
-                dob: data[id].dob,
-                role: data[id].role,
-                idToken: response.idToken
+      if(response !== false){
+        this.http.get(environment.databaseUrl + "/users.json")
+          .pipe(map((data: any) => {
+            let user = {};
+            for (let id in data) {
+              if(data[id].email === response.email){
+                user = {
+                  name: data[id].name,
+                  email: data[id].email,
+                  dob: data[id].dob,
+                  role: data[id].role,
+                  idToken: response.idToken,
+                  isDisable: data[id].isDisable
+                }
               }
             }
-          }
-          return user;
-        }))
-        .subscribe((response: any) => {
-          this.authService.setUserData(response);
-          this.authService.userSubject.next(response);
-          localStorage.setItem("user", JSON.stringify(response));
-          if(!this.isLoginFailed){
-            this.router.navigate(['/home'])
-          }
-        })
+            return user;
+          }))
+          .subscribe((response: any) => {
+            if(response.isDisable){
+              this.isAccountDisable = true;
+            }
+            else{
+              this.isAccountDisable = false;
+              this.authService.setUserData(response);
+              this.authService.userSubject.next(response);
+              localStorage.setItem("user", JSON.stringify(response));
+              if(!this.isLoginFailed){
+                this.router.navigate(['/home'])
+              }
+            }
+          })
+      }
     })
   }
 

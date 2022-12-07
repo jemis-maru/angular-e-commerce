@@ -67,7 +67,6 @@ export class ProductDetailComponent implements OnInit {
         email: this.userEmail,
         quantity: this.quantity
       }).subscribe((res: any) => {
-        console.log(res);
       })
     }
   }

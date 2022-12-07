@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../shared/service/auth.service';
 
@@ -14,6 +15,7 @@ export class RegisterComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   isFormSubmitted: boolean = false;
+  registrationFailed: boolean = false;
 
   registrationForm = new FormGroup({
     "name": new FormControl("", Validators.required),
@@ -57,19 +59,27 @@ export class RegisterComponent {
       password: this.registrationForm.value.password,
       returnSecureToken: true
     })
+    .pipe(
+      catchError(() => {
+        this.registrationFailed = true;
+        return of(false);
+      })
+    )
     .subscribe((response) => {
-      console.log(response);
-      this.http.post(environment.databaseUrl + "/users.json", {
-        name: this.registrationForm.value.name,
-        email: this.registrationForm.value.email,
-        dob: this.registrationForm.value.dob,
-        role: "user",
-      })
-      .subscribe((response) => {
-        console.log(response);
-        this.isFormSubmitted = true;
-        this.router.navigate(['/login']);
-      })
+      if(response !== false){
+        this.registrationFailed = false;
+        this.http.post(environment.databaseUrl + "/users.json", {
+          name: this.registrationForm.value.name,
+          email: this.registrationForm.value.email,
+          dob: this.registrationForm.value.dob,
+          role: "user",
+          isDisable: false
+        })
+        .subscribe((response) => {
+          this.isFormSubmitted = true;
+          this.router.navigate(['/login']);
+        })
+      }
     })
   }
 }

@@ -1,4 +1,9 @@
 <div>
+    <div *ngIf="registrationFailed" class="alert alert-danger mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">Email is already used!</p>
+        <button type="button" (click)="registrationFailed = false" class="btn-close" data-bs-dismiss="danger"
+            aria-label="Close"></button>
+    </div>
     <div *ngIf="isFormSubmitted" class="alert alert-success mt-3 d-flex justify-content-between" role="alert">
         <p class="m-0">Registerd successfully!</p>
         <button type="button" (click)="isFormSubmitted = false" class="btn-close" data-bs-dismiss="success" aria-label="Close"></button>

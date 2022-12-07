@@ -51,18 +51,14 @@ export class OrderSummaryComponent {
   }
 
   cancelOrder(data: any): void {
-    console.log(data);
     this.http.get<any>(environment.databaseUrl+`/products/${data.productId}.json`)
       .subscribe((res: any) => {
-        console.log(res);
         this.http.patch<any>(environment.databaseUrl + `/products/${data.productId}.json`, {
           stock: res.stock + data.quantity
         })
           .subscribe((response: any) => {
-            console.log(response);
             this.http.delete<any>(environment.databaseUrl + `/order/${data.id}.json`)
               .subscribe((response: any) => {
-                console.log(response);
                 this.fetchCartData();
               })
           })
