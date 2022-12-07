@@ -1,0 +1,35 @@
+<div>
+    <div class="input-group">
+        <div class="d-flex w-100">
+            <input class="form-control me-2" type="search" [(ngModel)]="searchTxt" placeholder="Search" aria-label="Search">
+        </div>
+    </div>
+    <div class="mt-30">
+        <div class="row justify-content-center">
+            <div *ngFor="let product of products | searchFilter: searchTxt" class="col-sm mb-10 d-flex justify-content-center">
+                <div class="card" style="width: 18rem;">
+                    <div *ngIf="product['imgUrl']; else notImgFound" class="d-flex img-container justify-content-center">
+                        <img class="card-img-top item-img" [src]="product['imgUrl']" alt="Card image cap">
+                    </div>
+                    <ng-template #notImgFound>
+                        <div class="d-flex img-container justify-content-center">
+                            <img class="card-img-top item-img" src="../../assets/images/no-image.png" alt="Card image cap">
+                        </div>
+                    </ng-template>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product['name'] }}</h5>
+                        <p class="card-title">Category: {{ product['description'] }}</p>
+                        <p class="card-title">Price: ₹{{ product['price'] }}</p>
+                        <p class="card-title">Stock: {{ product['stock'] }}</p>
+                        <div class="d-flex justify-content-center">
+                            <a (click)="goToProductDetails(product)" class="btn btn-primary">Go to details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="products.length <= 0">
+                <p class="text-center">No items found!</p>
+            </div>
+        </div>
+    </div>
+</div>

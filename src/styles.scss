@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+.px-20 {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.pt-30 {
+    padding-top: 30px;
+}
+
+.bg-gray {
+    background-color: rgb(238, 238, 238);
+    min-height: 100vh;
+}
+
+.bg-cyan {
+    background-color: #005f6d;
+}
+
+.txt-white {
+    color: #ffffff !important;
+}
+
+.border-white {
+    border-color: #ffffff !important;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.item-img {
+    max-width: 150px;
+}
+
+.item-img-table {
+    max-width: 80px !important;
+    height: 80px !important;
+}
+
+.img-container {
+    height: 150px;
+}
+
+.error {
+    color: #ff0000;
+}

@@ -1,0 +1,31 @@
+<div class="container">
+    <div *ngIf="this.orderData.length <= 0" class="d-flex justify-content-center">
+        <p>Your order list is empty!</p>
+    </div>
+    <div *ngFor="let data of orderData" class="bg-white rounded p-3 row mt-3">
+        <div *ngIf="data['imgUrl']; else notImgFound" class="col-12 col-sm-3">
+            <img class="card-img-top item-img" [src]="data['imgUrl']" alt="Card image cap">
+        </div>
+        <ng-template #notImgFound>
+            <div class="col-12 col-sm-3">
+                <img class="card-img-top item-img" src="../../assets/images/no-image.png" alt="Card image cap">
+            </div>
+        </ng-template>
+        <div class="col-12 col-sm-9">
+            <h5 class="card-title">{{ data['name'] }}</h5>
+            <p class="card-title">Category: {{ data['description'] }}</p>
+            <p class="card-title">Quantity: {{ data['quantity'] }}</p>
+            <p class="card-title">Price: ₹{{ data['price'] }}</p>
+            <button (click)="cancelOrder(data)" class="btn btn-danger" type="button">Cancel order</button>
+        </div>
+    </div>
+    <div class="bg-white rounded p-3 row mt-30">
+        <div class="d-flex justify-content-between">
+            <h4>Total amount: </h4>
+            <h4>₹{{ totalAmount }}</h4>
+        </div>
+        <div class="d-flex justify-content-center gap-4">
+            <button (click)="goToMyOrders()" class="btn w-50 btn-primary" type="button">Go to my order</button>
+        </div>
+    </div>
+</div>

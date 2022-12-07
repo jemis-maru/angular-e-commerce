@@ -1,0 +1,39 @@
+<form [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+    <div *ngIf="isFormSubmitted" class="alert alert-success mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">{{ submittedMessage }}</p>
+        <button type="button" (click)="isFormSubmitted = false" class="btn-close" data-bs-dismiss="success" aria-label="Close"></button>
+    </div>
+    <div class="form-group mb-10">
+        <label>Product Name: </label>
+        <input type="text" class="form-control" formControlName="name" placeholder="Enter Product Name">
+        <div *ngIf="addProductForm.controls.name?.touched">
+            <p class="error" *ngIf="addProductForm.controls.name?.errors?.['required'] === true">Product name is a required field!</p>
+        </div>
+    </div>
+    <div class="form-group mb-10">
+        <label>Product Image: </label>
+        <input (change)="changeProductImage($event)" type="file" class="form-control">
+    </div>
+    <div class="form-group mb-10">
+        <label>Product Description: </label>
+        <input type="text" class="form-control" formControlName="description" placeholder="Enter Product Description">
+        <div *ngIf="addProductForm.controls.description?.touched">
+            <p class="error" *ngIf="addProductForm.controls.description?.errors?.['required'] === true">Product description is a required field!</p>
+        </div>
+    </div>
+    <div class="form-group mb-10">
+        <label>Product Price: </label>
+        <input type="number" class="form-control" formControlName="price" placeholder="Enter Price">
+        <div *ngIf="addProductForm.controls.price?.touched">
+            <p class="error" *ngIf="addProductForm.controls.price?.errors?.['required'] === true">Price is a required field!</p>
+        </div>
+    </div>
+    <div class="form-group mb-10">
+        <label>Available Stock: </label>
+        <input type="number" class="form-control" formControlName="stock" placeholder="Enter Price">
+        <div *ngIf="addProductForm.controls.stock?.touched">
+            <p class="error" *ngIf="addProductForm.controls.stock?.errors?.['required'] === true">Stock is a required field!</p>
+        </div>
+    </div>
+    <button [disabled]="!addProductForm.valid" type="submit" class="btn btn-primary">{{ btnName }}</button>
+</form>

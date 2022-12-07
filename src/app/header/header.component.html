@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light px-20 bg-cyan">
+    <a routerLink="/home" class="navbar-brand txt-white">E-Commerce</a>
+    <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a routerLink="/home" class="nav-link txt-white">Home</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/register" *ngIf="!isLogin" class="nav-link txt-white">Register</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/login" *ngIf="!isLogin" class="nav-link txt-white">Login</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/profile" *ngIf="isLogin" class="nav-link txt-white">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/cart" *ngIf="isLogin" class="nav-link txt-white">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/my-orders" *ngIf="isLogin" class="nav-link txt-white">My Orders</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/dashboard/products" *ngIf="isAdmin" class="nav-link txt-white">Dashboard</a>
+            </li>
+            <li class="nav-item cursor-pointer">
+                <a (click)="logout()" *ngIf="isLogin" class="nav-link txt-white">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>

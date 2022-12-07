@@ -1,0 +1,34 @@
+<div>
+    <div *ngIf="isFormSubmitted" class="alert alert-success mt-3 d-flex justify-content-between" role="alert">
+        <p class="m-0">User edited successfully!</p>
+        <button type="button" (click)="isFormSubmitted = false" class="btn-close" data-bs-dismiss="success" aria-label="Close"></button>
+    </div>
+    <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-10">
+            <label>Name: </label>
+            <input class="form-control" type="text" name="name" formControlName="name">
+            <div *ngIf="editUserForm.controls.name?.touched">
+                <p class="error" *ngIf="editUserForm.controls.name?.errors?.['required'] === true">Name is a required field!</p>
+            </div>
+        </div>
+        <div class="form-group mb-10">
+            <label>Date of birth: </label>
+            <input type="date" class="form-control" name="dob" formControlName="dob">
+            <div *ngIf="editUserForm.controls.dob?.touched">
+                <p class="error" *ngIf="editUserForm.controls.dob?.errors?.['required'] === true">Date of birth is a required field!</p>
+                <p class="error" *ngIf="editUserForm.controls.dob?.errors?.['isDateValidate'] === false">Date should not be greater than current date!</p>
+            </div>
+        </div>
+        <div class="form-group mb-10">
+            <select class="form-select" aria-label="Default select example" formControlName="role">
+                <option selected value="" disabled>Select role</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <div *ngIf="editUserForm.controls.role?.touched">
+                <p class="error" *ngIf="editUserForm.controls.role?.errors?.['required'] === true">Role is a required field!</p>
+            </div>
+        </div>
+        <button [disabled]="!editUserForm.valid" type="submit" class="btn btn-primary">Edit</button>
+    </form>
+</div>
